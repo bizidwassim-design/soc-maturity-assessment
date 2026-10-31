@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Self-assessment of security operations centre maturity: 50 questions, 6 domains, 5 levels, radar chart and gap list. Runs entirely in your browser.">
+  <meta name="color-scheme" content="light dark">
+  <title>SOC Maturity Assessment</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#results">Skip to results</a>
+
+  <header class="site-header">
+    <div class="wrap header-row">
+      <div>
+        <h1>SOC Maturity Assessment</h1>
+        <p class="tagline">50 questions · 6 domains · 5 levels. Nothing leaves your browser.</p>
+      </div>
+      <div class="header-actions">
+        <button type="button" id="theme-toggle" class="btn btn-ghost" aria-pressed="false">Dark theme</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card intro" aria-labelledby="how-title">
+      <h2 id="how-title">How it works</h2>
+      <p>
+        Answer each question by picking the level that best describes your security operations today.
+        Be honest: the gap list is only useful if it is true. Scores update as you go and a draft is kept in
+        this browser until you reset it. When you are done, export the JSON to keep a dated record, and read
+        <a href="docs/using-the-results.md">using the results</a> to turn the gaps into a roadmap.
+      </p>
+      <p class="sample-row">
+        <button type="button" id="btn-sample" class="btn">Load the Northwind Logistics sample</button>
+        <span class="muted">Fictional answers, to see what a completed assessment looks like.</span>
+      </p>
+      <dl class="levels-legend" id="levels-legend"></dl>
+      <div class="meta-grid">
+        <div class="field">
+          <label for="meta-org">Organisation (optional)</label>
+          <input type="text" id="meta-org" autocomplete="organization" placeholder="Northwind Logistics">
+        </div>
+        <div class="field">
+          <label for="meta-assessor">Assessor (role, not name)</label>
+          <input type="text" id="meta-assessor" placeholder="SOC manager">
+        </div>
+        <div class="field">
+          <label for="meta-date">Assessment date</label>
+          <input type="date" id="meta-date">
+        </div>
+      </div>
+    </section>
+
+    <section class="card progress-card" aria-live="polite">
+      <div class="progress-row">
+        <span id="progress-text">0 of 50 answered</span>
+        <progress id="progress-bar" class="progress-bar" max="50" value="0" aria-labelledby="progress-text"></progress>
+      </div>
+    </section>
+
+    <div id="questionnaire"></div>
+
+    <section class="card results" id="results" aria-labelledby="results-title">
+      <h2 id="results-title">Results</h2>
+
+      <div class="results-grid">
+        <div class="score-overall">
+          <h3>Overall maturity</h3>
+          <p class="score-big" id="overall-score">–</p>
+          <p class="score-label" id="overall-label">Answer the questions to see your level.</p>
+          <p class="score-note" id="overall-note"></p>
+        </div>
+        <figure class="radar" id="radar-figure">
+          <div id="radar"></div>
+          <figcaption>Average level per domain (0 = Initial, 4 = Optimised)</figcaption>
+        </figure>
+      </div>
+
+      <h3>Domain scores</h3>
+      <div class="table-wrap">
+        <table id="domain-table">
+          <thead>
+            <tr>
+              <th scope="col">Domain</th>
+              <th scope="col">Answered</th>
+              <th scope="col">Score</th>
+              <th scope="col">Level</th>
+              <th scope="col">Lowest question</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <h3>Top gaps and recommended next steps</h3>
+      <p class="muted">The 10 lowest-scoring answered questions. Each next step moves that question up one level.</p>
+      <div class="table-wrap">
+        <table id="gap-table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Question</th>
+              <th scope="col">Domain</th>
+              <th scope="col">Level</th>
+              <th scope="col">Recommended next step</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="btn-export" class="btn btn-primary">Export JSON</button>
+        <label class="btn" for="file-import">Import JSON</label>
+        <input type="file" id="file-import" accept="application/json,.json" class="visually-hidden">
+        <button type="button" id="btn-print" class="btn">Print / save as PDF</button>
+        <button type="button" id="btn-reset" class="btn btn-danger">Reset answers</button>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>
+        SOC Maturity Assessment · MIT License · No telemetry, no external scripts, no accounts.
+        Level definitions and evidence guidance: <a href="docs/maturity-model.md">docs/maturity-model.md</a>.
+      </p>
+    </div>
+  </footer>
+
+  <script src="data/questions.js"></script>
+  <script src="data/sample.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
