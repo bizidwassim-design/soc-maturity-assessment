@@ -6,6 +6,9 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Changed
+- A partial assessment is flagged next to the level and in amber, with the number of unanswered questions and untouched domains, because unanswered questions are excluded from the mean.
+
+### Changed
 - The first visit opens on the fictional sample, with a banner and a *Start with a blank assessment* button that is remembered, so visitors see real-looking results straight away.
 
 ## [1.0.0] — 2026-10-31

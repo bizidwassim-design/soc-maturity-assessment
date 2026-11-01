@@ -291,10 +291,13 @@
       noteEl.textContent = "";
     } else {
       overallEl.textContent = fmt(scores.overall);
-      labelEl.textContent = "Level " + Math.round(scores.overall) + " · " + levelName(scores.overall);
-      noteEl.textContent = scores.answered < scores.total
-        ? "Partial: based on " + scores.answered + " of " + scores.total + " questions. Mean of domain averages."
+      var partial = scores.answered < scores.total;
+      var emptyDomains = DATA.domains.filter(function (d) { return scores.domains[d.key].answered === 0; }).length;
+      labelEl.textContent = "Level " + Math.round(scores.overall) + " · " + levelName(scores.overall) + (partial ? " · partial result" : "");
+      noteEl.textContent = partial
+        ? "Partial: " + scores.answered + " of " + scores.total + " questions answered" + (emptyDomains ? ", " + emptyDomains + " domain(s) not started" : "") + ". Unanswered questions are left out, so this score can look higher than the full assessment will."
         : "Mean of the six domain averages.";
+      noteEl.classList.toggle("is-partial", partial);
     }
 
     // domain table and per-domain badges
