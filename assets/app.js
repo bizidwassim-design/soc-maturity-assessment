@@ -511,7 +511,21 @@
     }
     applyImported(sample, true);
     setStatus("Loaded the fictional Northwind Logistics sample (" + Object.keys(state.answers).length + " answers).", "ok");
+    document.getElementById("demo-banner").hidden = false;
   }
+
+  /* First visit: show the sample so the results are visible; "start blank" remembers the choice. */
+  var BLANK_KEY = "soc-maturity-blank";
+  function startBlank() {
+    state = { answers: {}, notes: {}, meta: { organisation: "", assessor: "", date: todayIso() } };
+    clearDraft();
+    try { window.localStorage.setItem(BLANK_KEY, "1"); } catch (e) { /* ignore */ }
+    document.getElementById("demo-banner").hidden = true;
+    refreshAllQuestions();
+    renderResults();
+    setStatus("Blank assessment: answer the questions to build your own results.", "ok");
+  }
+  function wantsBlank() { try { return window.localStorage.getItem(BLANK_KEY) === "1"; } catch (e) { return false; } }
 
   function resetAll() {
     if (!window.confirm("Clear all answers, notes and the saved draft?")) { return; }
@@ -548,10 +562,11 @@
     document.getElementById("btn-print").addEventListener("click", function () { window.print(); });
     document.getElementById("btn-reset").addEventListener("click", resetAll);
     document.getElementById("btn-sample").addEventListener("click", function () { loadSample(true); });
+    document.getElementById("btn-start-blank").addEventListener("click", startBlank);
 
     var wantsSample = /[?&]sample=1(&|$)/.test(window.location.search);
     var restored = wantsSample ? false : loadDraft();
-    if (wantsSample) {
+    if (wantsSample || (!restored && !wantsBlank())) {
       loadSample(false);
     } else if (!restored) {
       state.meta.date = todayIso();
