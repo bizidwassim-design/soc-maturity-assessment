@@ -2,6 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![CI](https://github.com/bizidwassim-design/soc-maturity-assessment/actions/workflows/ci.yml/badge.svg)](https://github.com/bizidwassim-design/soc-maturity-assessment/actions/workflows/ci.yml) [![Fictional data](https://img.shields.io/badge/sample%20data-fictional-informational)](SECURITY.md)
 
+[![Demo](https://img.shields.io/badge/demo-open%20the%20live%20app-2F80ED?style=for-the-badge&logo=githubpages&logoColor=white)](https://bizidwassim-design.github.io/soc-maturity-assessment/)
+
 A free, open-source **self-assessment for security operations**: 50 questions across 6 domains, scored on
 5 maturity levels, with a radar chart, a ranked gap list and a concrete next step for every gap.
 It is a single static page: no build, no server, no account, no telemetry. Open `index.html` and start.
